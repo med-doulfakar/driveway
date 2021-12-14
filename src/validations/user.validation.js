@@ -1,3 +1,4 @@
+const { object } = require('joi');
 const Joi = require('joi');
 const { password, objectId } = require('./custom.validation');
 
@@ -6,8 +7,11 @@ const createUser = {
     email: Joi.string().required().email(),
     password: Joi.string().required().custom(password),
     name: Joi.string().required(),
-    role: Joi.string().required().valid('user', 'admin'),
-    accountId: Joi.string().custom(objectId),
+    role: Joi.string().required().valid('student', 'instructor', 'admin'),
+    account: Joi.string().custom(objectId),
+    cin: Joi.string(),
+    phone: Joi.string(),
+    plan: Joi.string().custom(objectId),
   }),
 };
 
@@ -24,6 +28,18 @@ const getUsers = {
 const getUser = {
   params: Joi.object().keys({
     userId: Joi.string().custom(objectId),
+  }),
+};
+const getUserByAccountId = {
+  params: Joi.object().keys({
+    accountId: Joi.string().custom(objectId),
+  }),
+};
+
+const linkUserWithAccount = {
+  params: Joi.object().keys({
+    userId: Joi.string().custom(objectId),
+    accountId: Joi.string().custom(objectId),
   }),
 };
 
@@ -52,4 +68,6 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  linkUserWithAccount,
+  getUserByAccountId,
 };

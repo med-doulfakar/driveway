@@ -23,6 +23,20 @@ const userSchema = mongoose.Schema(
         }
       },
     },
+    phone: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
+    cin: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
     password: {
       type: String,
       required: true,
@@ -38,7 +52,7 @@ const userSchema = mongoose.Schema(
     role: {
       type: String,
       enum: roles,
-      default: 'user',
+      default: 'student',
     },
     isEmailVerified: {
       type: Boolean,
@@ -48,6 +62,16 @@ const userSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Account',
     },
+    plan: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Plan',
+    },
+    payments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'StudentPayment',
+      },
+    ],
   },
   {
     timestamps: true,

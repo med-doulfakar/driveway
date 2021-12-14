@@ -9,7 +9,8 @@ const createSession = {
     type: Joi.string()
       .required()
       .valid(...SESSION_TYPES),
-    monitorId: Joi.string().custom(objectId),
+    instructor: Joi.string().custom(objectId),
+    account: Joi.string().custom(objectId),
     users: Joi.array().items(Joi.string().custom(objectId)),
   }),
 };
@@ -19,8 +20,22 @@ const getByUser = {
     userId: Joi.string().custom(objectId),
   }),
 };
+const getByAccount = {
+  params: Joi.object().keys({
+    accountId: Joi.string().custom(objectId),
+  }),
+};
+
+const removeUser = {
+  body: Joi.object().keys({
+    userId: Joi.string().custom(objectId),
+    sessionId: Joi.string().custom(objectId),
+  }),
+};
 
 module.exports = {
   createSession,
   getByUser,
+  getByAccount,
+  removeUser,
 };

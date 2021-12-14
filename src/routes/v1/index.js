@@ -3,6 +3,8 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const accountRoute = require('./account.route');
 const sessionRoute = require('./session.route');
+const planRoute = require('./plan.route');
+const studentPaymentRoute = require('./student-payment.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -25,6 +27,15 @@ const defaultRoutes = [
   {
     path: '/sessions',
     route: sessionRoute,
+  },
+
+  {
+    path: '/plans',
+    route: planRoute,
+  },
+  {
+    path: '/student-payment',
+    route: studentPaymentRoute,
   },
 ];
 

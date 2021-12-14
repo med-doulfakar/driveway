@@ -8,20 +8,22 @@ const router = express.Router();
 
 router
   .route('/')
-  .post(
-    () => {
-      return true;
-    },
-    validate(userValidation.createUser),
-    userController.createUser
-  )
-  .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
+  .post(auth('manageStudents'), validate(userValidation.createUser), userController.createUser)
+  .get(auth('manageStudents'), validate(userValidation.getUsers), userController.getUsers);
+
+router
+  .route('/getUsersByAccountId/:accountId')
+  .get(auth('manageStudents'), validate(userValidation.getUserByAccountId), userController.getUserByAccountId);
+
+router
+  .route('/linkUserToAccount/:userId/:accountId')
+  .get(auth('manageStudents'), validate(userValidation.linkUserWithAccount), userController.linkUserWithAccount);
 
 router
   .route('/:userId')
-  .get(auth('getUsers'), validate(userValidation.getUser), userController.getUser)
-  .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
-  .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
+  .get(auth('manageStudents'), validate(userValidation.getUser), userController.getUser)
+  .patch(auth('manageStudents'), validate(userValidation.updateUser), userController.updateUser)
+  .delete(auth('manageStudents'), validate(userValidation.deleteUser), userController.deleteUser);
 
 module.exports = router;
 

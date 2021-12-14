@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
+const accountService = require('./account.service');
 
 /**
  * Create a user
@@ -34,7 +35,7 @@ const queryUsers = async (filter, options) => {
  * @returns {Promise<User>}
  */
 const getUserById = async (id) => {
-  return User.findById(id);
+  return User.findById(id).populate('payments account plan');
 };
 
 /**
@@ -43,7 +44,13 @@ const getUserById = async (id) => {
  * @returns {Promise<User>}
  */
 const getUserByEmail = async (email) => {
-  return User.findOne({ email });
+  return User.findOne({ email }).populate('account');
+};
+
+const getUsersByAccountId = async (accountId) => {
+  return User.find({ role: 'student', account: accountId }, (err, docs) => {
+    //console.log(docs);
+  });
 };
 
 /**
@@ -61,6 +68,22 @@ const updateUserById = async (userId, updateBody) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
   Object.assign(user, updateBody);
+  await user.save();
+  return user;
+};
+
+const linkUserWithAccount = async (userId, accountId) => {
+  const user = await getUserById(userId);
+  const account = await accountService.getAccountById(accountId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
+  if (!account) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Account not found');
+  }
+
+  user.account = account;
   await user.save();
   return user;
 };
@@ -83,7 +106,9 @@ module.exports = {
   createUser,
   queryUsers,
   getUserById,
+  getUsersByAccountId,
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  linkUserWithAccount,
 };

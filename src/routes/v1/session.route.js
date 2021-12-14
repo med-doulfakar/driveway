@@ -17,4 +17,12 @@ router.route('/:userId').get(
   sessionController.getSessionsByUserId
 );
 
+router
+  .route('/byAccount/:accountId')
+  .get(auth(), validate(sessionValidation.getByAccount), sessionController.getSessionsByAccountId);
+
+router
+  .route('/removeUser')
+  .post(auth('manageSessions'), validate(sessionValidation.removeUser), sessionController.removeUserFromSession);
+
 module.exports = router;

@@ -22,9 +22,13 @@ const sessionSchema = mongoose.Schema(
         ref: 'User',
       },
     ],
-    monitor: {
+    instructor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+    },
+    account: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Account',
     },
     cancelled: {
       type: Boolean,

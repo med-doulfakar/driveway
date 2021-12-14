@@ -12,7 +12,18 @@ const getSessionsByUserId = catchAsync(async (req, res) => {
   res.send(sessions);
 });
 
+const getSessionsByAccountId = catchAsync(async (req, res) => {
+  const sessions = await sessionService.getSessionsByAccountId(req.params.accountId);
+  res.send(sessions);
+});
+const removeUserFromSession = catchAsync(async (req, res) => {
+  const session = await sessionService.removeUserFromSession(req.body.userId, req.body.sessionId);
+  res.send(session);
+});
+
 module.exports = {
   createSession,
-  getSessionsByUserId
+  getSessionsByUserId,
+  getSessionsByAccountId,
+  removeUserFromSession,
 };

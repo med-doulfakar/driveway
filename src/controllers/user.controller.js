@@ -24,6 +24,14 @@ const getUser = catchAsync(async (req, res) => {
   res.send(user);
 });
 
+const getUserByAccountId = catchAsync(async (req, res) => {
+  const users = await userService.getUsersByAccountId(req.params.accountId);
+  if (!users) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Users not found');
+  }
+  res.send(users);
+});
+
 const updateUser = catchAsync(async (req, res) => {
   const user = await userService.updateUserById(req.params.userId, req.body);
   res.send(user);
@@ -34,10 +42,17 @@ const deleteUser = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+const linkUserWithAccount = catchAsync(async (req, res) => {
+  await userService.linkUserWithAccount(req.params.userId, req.params.accountId);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
 module.exports = {
   createUser,
   getUsers,
   getUser,
+  getUserByAccountId,
   updateUser,
   deleteUser,
+  linkUserWithAccount,
 };
