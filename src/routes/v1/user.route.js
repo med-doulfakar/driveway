@@ -12,8 +12,8 @@ router
   .get(auth('manageStudents'), validate(userValidation.getUsers), userController.getUsers);
 
 router
-  .route('/getUsersByAccountId/:accountId')
-  .get(auth('manageStudents'), validate(userValidation.getUserByAccountId), userController.getUserByAccountId);
+  .route('/getUsersByAccountId')
+  .post(auth('manageStudents'), validate(userValidation.getUserByAccountId), userController.getUserByAccountId);
 
 router
   .route('/linkUserToAccount/:userId/:accountId')

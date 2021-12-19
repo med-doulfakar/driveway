@@ -58,6 +58,10 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    active: {
+      type: Boolean,
+      default: false,
+    },
     account: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Account',

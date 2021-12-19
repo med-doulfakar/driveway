@@ -14,10 +14,15 @@ const createPlan = async (planBody) => {
   return Plan.create(planBody);
 };
 
+const getPlanById = async (planId) => {
+  return Plan.findById(planId);
+};
+
 const getPlans = async (accountId) => {
   return Plan.find({ account: accountId }).populate('account', 'users');
 };
 module.exports = {
   createPlan,
+  getPlanById,
   getPlans,
 };

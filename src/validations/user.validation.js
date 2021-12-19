@@ -31,8 +31,9 @@ const getUser = {
   }),
 };
 const getUserByAccountId = {
-  params: Joi.object().keys({
-    accountId: Joi.string().custom(objectId),
+  body: Joi.object().keys({
+    accountId: Joi.string().custom(objectId).required(),
+    roles: Joi.array().items(Joi.string()),
   }),
 };
 
@@ -49,9 +50,14 @@ const updateUser = {
   }),
   body: Joi.object()
     .keys({
-      email: Joi.string().email(),
-      password: Joi.string().custom(password),
-      name: Joi.string(),
+      email: Joi.string().required().email(),
+      password: Joi.string().required().custom(password),
+      name: Joi.string().required(),
+      role: Joi.string().required().valid('student', 'instructor', 'admin'),
+      account: Joi.string().custom(objectId),
+      cin: Joi.string(),
+      phone: Joi.string(),
+      plan: Joi.string().custom(objectId),
     })
     .min(1),
 };

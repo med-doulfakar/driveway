@@ -4,3 +4,4 @@ module.exports.accountController = require('./account.controller');
 module.exports.sessionController = require('./session.controller');
 module.exports.planController = require('./plan.controller');
 module.exports.studentPaymentController = require('./student-payment.controller');
+module.exports.carController = require('./car.controller');

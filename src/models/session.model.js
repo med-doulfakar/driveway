@@ -51,7 +51,7 @@ sessionSchema.statics.checkOverlap = async function (startDate, endDate, monitor
     $and: [{ start: { $gt: startDate } }, { start: { $lt: endDate } }, { users: { $in: users } }, { monitor: monitorId }],
   });
 
-  return sessions !== null;
+  return sessions.length > 0;
 };
 
 /**
