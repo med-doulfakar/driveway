@@ -5,3 +5,5 @@ module.exports.Session = require('./session.model');
 module.exports.Plan = require('./plan.model');
 module.exports.StudentPayment = require('./student-payment.model');
 module.exports.Car = require('./car.model');
+module.exports.StudentInstructor = require('./student-instructor.model');
+module.exports.Notification = require('./notification.model');

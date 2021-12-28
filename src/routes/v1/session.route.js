@@ -9,13 +9,7 @@ const router = express.Router();
 
 router.route('/').post(auth(), validate(sessionValidation.createSession), sessionController.createSession);
 
-router.route('/:userId').get(
-  () => {
-    return true;
-  },
-  validate(sessionValidation.getByUser),
-  sessionController.getSessionsByUserId
-);
+router.route('/:userId').get(auth(), validate(sessionValidation.getByUser), sessionController.getSessionsByUserId);
 
 router
   .route('/byAccount/:accountId')

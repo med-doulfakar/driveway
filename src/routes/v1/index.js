@@ -6,6 +6,7 @@ const sessionRoute = require('./session.route');
 const planRoute = require('./plan.route');
 const studentPaymentRoute = require('./student-payment.route');
 const carRoute = require('./car.route');
+const kpisRoute = require('./kpis.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -41,6 +42,10 @@ const defaultRoutes = [
   {
     path: '/cars',
     route: carRoute,
+  },
+  {
+    path: '/kpis',
+    route: kpisRoute,
   },
 ];
 

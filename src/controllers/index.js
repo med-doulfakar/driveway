@@ -5,3 +5,4 @@ module.exports.sessionController = require('./session.controller');
 module.exports.planController = require('./plan.controller');
 module.exports.studentPaymentController = require('./student-payment.controller');
 module.exports.carController = require('./car.controller');
+module.exports.kpiController = require('./kpis.controller');

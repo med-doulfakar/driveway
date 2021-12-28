@@ -9,7 +9,6 @@ const ApiError = require('../utils/ApiError');
  */
 const createSession = async (sessionBody) => {
   const sessions = await Session.checkOverlap(sessionBody.start, sessionBody.end, sessionBody.monitorId, sessionBody.users);
-  console.log(sessions)
   if (sessions) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Session Overlap');
   }
@@ -22,7 +21,9 @@ const createSession = async (sessionBody) => {
  * @returns {Promise<Session>}
  */
 const getSessionsByUserId = async (userId) => {
-  const sessions = Session.find({ user: userId });
+  const sessions = Session.find({ users: { $in: [userId] } })
+    .populate('users')
+    .populate('instructor');
   return sessions;
 };
 
@@ -47,5 +48,5 @@ module.exports = {
   createSession,
   getSessionsByUserId,
   getSessionsByAccountId,
-  removeUserFromSession
+  removeUserFromSession,
 };

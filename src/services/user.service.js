@@ -1,8 +1,8 @@
 const httpStatus = require('http-status');
-const { planService } = require('.');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
 const accountService = require('./account.service');
+const studentInstructorService = require('./student-instructor.service');
 
 /**
  * Create a user
@@ -14,11 +14,10 @@ const createUser = async (userBody) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
   const user = await User.create(userBody);
-  /* if(userBody.plan){
-    const plan = await planService.getPlanById(userBody.plan)
-    plan.users.push(user)
-    plan.save()
-  } */
+  if (user.role === 'instructor') {
+    studentInstructorService.addStudentsToInstructor({ instructor: user, student: [] });
+  }
+  return user;
 };
 
 /**
@@ -50,11 +49,11 @@ const getUserById = async (id) => {
  * @returns {Promise<User>}
  */
 const getUserByEmail = async (email) => {
-  return User.findOne({ email }).populate('account');
+  return User.findOne({ email }).populate('plan account').exec();
 };
 
 const getUsersByAccountId = async (accountId, roles) => {
-  return User.find({ role: { $in: roles }, account: accountId }, (err, docs) => {});
+  return User.find({ role: { $in: roles }, account: accountId });
 };
 
 /**

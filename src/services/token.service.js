@@ -21,6 +21,7 @@ const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
     iat: moment().unix(),
     exp: expires.unix(),
     type,
+    userId,
   };
   return jwt.sign(payload, secret);
 };

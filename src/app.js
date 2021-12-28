@@ -3,11 +3,14 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const mongoSanitize = require('express-mongo-sanitize');
 const compression = require('compression');
-const cors = require('cors');
 const passport = require('passport');
 const httpStatus = require('http-status');
+const { createServer } = require('http');
+
+const cors = require('cors');
 const config = require('./config/config');
 const morgan = require('./config/morgan');
+const socket = require('./config/socket');
 const { jwtStrategy } = require('./config/passport');
 const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
@@ -64,4 +67,9 @@ app.use(errorConverter);
 // handle error
 app.use(errorHandler);
 
-module.exports = app;
+// set socket.io
+const server = createServer(app);
+
+socket(server);
+
+module.exports = server;
