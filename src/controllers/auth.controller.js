@@ -15,6 +15,13 @@ const login = catchAsync(async (req, res) => {
   res.send({ user, tokens });
 });
 
+const changePassword = catchAsync(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  // eslint-disable-next-line no-unused-vars
+  const user = await authService.changePassword(req.user._id, oldPassword, newPassword);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
 const logout = catchAsync(async (req, res) => {
   await authService.logout(req.body.refreshToken);
   res.status(httpStatus.NO_CONTENT).send();
@@ -50,6 +57,7 @@ const verifyEmail = catchAsync(async (req, res) => {
 module.exports = {
   register,
   login,
+  changePassword,
   logout,
   refreshTokens,
   forgotPassword,
