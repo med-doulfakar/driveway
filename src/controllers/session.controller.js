@@ -20,10 +20,17 @@ const removeUserFromSession = catchAsync(async (req, res) => {
   const session = await sessionService.removeUserFromSession(req.body.userId, req.body.sessionId);
   res.send(session);
 });
+const cancelSession = catchAsync(async (req, res) => {
+  if (req.user.role === 'student') {
+    const session = await sessionService.cancelSession(req.user._id, req.params.sessionId);
+    res.send(session);
+  }
+});
 
 module.exports = {
   createSession,
   getSessionsByUserId,
   getSessionsByAccountId,
   removeUserFromSession,
+  cancelSession,
 };

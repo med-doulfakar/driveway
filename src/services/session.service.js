@@ -44,9 +44,14 @@ const removeUserFromSession = async (userId, sessionId) => {
   return session.save();
 };
 
+const cancelSession = async (userId, sessionId) => {
+  return Session.updateOne({ _id: sessionId, users: { $in: [userId] } }, { $addToSet: { cancellations: userId } });
+};
+
 module.exports = {
   createSession,
   getSessionsByUserId,
   getSessionsByAccountId,
   removeUserFromSession,
+  cancelSession,
 };

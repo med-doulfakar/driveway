@@ -19,4 +19,5 @@ router
   .route('/removeUser')
   .post(auth('manageSessions'), validate(sessionValidation.removeUser), sessionController.removeUserFromSession);
 
+router.route('/cancel/:sessionId').get(auth(), validate(), sessionController.cancelSession);
 module.exports = router;

@@ -34,6 +34,12 @@ const sessionSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    cancellations: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     timestamps: true,

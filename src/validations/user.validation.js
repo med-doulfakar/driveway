@@ -1,4 +1,3 @@
-const { object } = require('joi');
 const Joi = require('joi');
 const { password, objectId } = require('./custom.validation');
 
@@ -30,6 +29,7 @@ const getUser = {
     userId: Joi.string().custom(objectId),
   }),
 };
+
 const getUserByAccountId = {
   body: Joi.object().keys({
     accountId: Joi.string().custom(objectId).required(),
@@ -51,13 +51,9 @@ const updateUser = {
   body: Joi.object()
     .keys({
       email: Joi.string().required().email(),
-      password: Joi.string().required().custom(password),
       name: Joi.string().required(),
-      role: Joi.string().required().valid('student', 'instructor', 'admin'),
-      account: Joi.string().custom(objectId),
       cin: Joi.string(),
       phone: Joi.string(),
-      plan: Joi.string().custom(objectId),
     })
     .min(1),
 };

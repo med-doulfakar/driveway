@@ -6,6 +6,7 @@ const getStudentKpis = async (user) => {
   const futureSessions = await Session.find({
     start: { $gte: new Date() },
     users: { $in: [user._id] },
+    cancellations: { $nin: [user._id] },
   });
 
   const payments = await StudentPayment.find({
